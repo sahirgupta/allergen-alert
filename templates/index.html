@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Label Lens</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <script src="/static/script.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Label Lens</h1>
+        <h2>Food Label Analyzer</h2>
+        <p class="tagline">Upload your food label and check for allergens and harmful ingredients</p>
+        <form id="analyzeForm" action="/analyze" method="POST" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="allergens">Enter your allergens (comma separated):</label>
+                <input type="text" id="allergens" name="allergens" placeholder="e.g., nuts, gluten, dairy" required>
+            </div>
+            <div class="input-group">
+                <label for="imageInput">Upload an image of the ingredients list:</label>
+                <input type="file" id="imageInput" name="imageInput" accept="image/*" required>
+                <div id="imagePreview" class="image-preview">
+                    <img id="previewImage" src="#" alt="Image Preview" />
+                </div>
+            </div>
+            <button type="submit" id="submitButton">Analyze</button>
+        </form>
+
+        <!-- Loading Indicator -->
+        <div id="loadingIndicator" class="loading-indicator">
+            <div class="spinner"></div>
+            <p>Analyzing the food label... Please wait!</p>
+        </div>
+
+        <div id="responseContainer" class="response">
+            {% if response %}
+                <h2>Analysis Result:</h2>
+                <!-- Using the 'safe' filter to render HTML content -->
+                <div>{{ response | safe }}</div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

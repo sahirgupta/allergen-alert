@@ -1,0 +1,225 @@
+/* Full reset for cross-browser consistency */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Smooth scrolling effect */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Ensure the body and html can scroll vertically */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto; /* Allows vertical scrolling */
+}
+
+/* Background with RGB animation */
+body {
+    display: flex;
+    justify-content: center;  /* Center horizontally */
+    align-items: center;      /* Center vertically */
+    min-height: 100vh;        /* Ensure the background covers the entire height of the viewport */
+    background: linear-gradient(45deg, rgb(255, 0, 0), rgb(0, 255, 0), rgb(0, 0, 255), rgb(255, 255, 0), rgb(0, 255, 255), rgb(255, 0, 255));
+    background-size: 600% 600%;
+    animation: rgbShift 30s linear infinite;
+}
+
+@keyframes rgbShift {
+    0% { background-position: 0% 50%; }
+    25% { background-position: 50% 50%; }
+    50% { background-position: 100% 50%; }
+    75% { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Centered container */
+.container {
+    width: 90%;
+    max-width: 700px;
+    min-width: 300px; /* Ensure the container doesn’t shrink too much on small screens */
+    padding: 40px;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    transition: transform 0.3s;
+    overflow: visible; /* Let the content grow dynamically */
+    margin: 20px 0; /* Add some space around the container for better visual appeal */
+}
+
+/* Ensure images are responsive */
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Tagline under title */
+.tagline {
+    font-size: 1.2em;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+/* Header styling */
+/* Existing h1 styles */
+h1 {
+    font-size: 3em;
+    margin-bottom: 15px;
+    color: #845ec2;
+}
+
+/* New h2 styles for the subheading */
+h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    color: #666; /* Lighter color for distinction */ 
+}
+
+
+/* Input group styling with animations */
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-size: 1.1em;
+    color: #444;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+}
+
+input[type="text"], input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+    font-size: 1em;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+input[type="text"]:hover, input[type="file"]:hover {
+    box-shadow: 0 0 10px rgba(132, 94, 194, 0.5);
+}
+
+input[type="text"]:focus, input[type="file"]:focus {
+    border: 2px solid #845ec2;
+}
+
+/* Button with ripple effect */
+button {
+    background-color: #845ec2;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    width: 100%;
+    font-size: 1.2em;
+    margin-top: 15px;
+    overflow: hidden;
+    position: relative;
+    transition: background 0.3s, transform 0.3s;
+}
+
+button::after {
+    content: '';
+    position: absolute;
+    width: 300%;
+    height: 300%;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.6s;
+}
+
+button:active::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+button:hover {
+    background-color: #5a189a;
+}
+
+/* Image preview container */
+.image-preview {
+    margin-top: 15px;
+    display: none;
+}
+
+.image-preview img {
+    width: 100%;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    margin-top: 10px;
+    max-height: 300px;
+    object-fit: contain;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Loading indicator styling */
+.loading-indicator {
+    display: none;
+    margin-top: 20px;
+    animation: fadeIn 1s forwards;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-left-color: #845ec2;
+    animation: spin 1s linear infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loading-indicator p {
+    font-size: 1.2em;
+    color: #5a189a;
+    margin-top: 15px;
+}
+
+/* Response container */
+.response {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    color: #333;
+    animation: fadeIn 1s;
+}
+
+/* For small screens, adjust the padding and layout */
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        width: 95%;
+    }
+}
+
+.container {
+    /* Existing styles */
+    overflow-y: visible; /* Allow the entire page to handle scrolling */
+}
