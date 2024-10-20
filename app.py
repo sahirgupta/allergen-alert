@@ -7,7 +7,7 @@ from flask import Flask, request, render_template, redirect, url_for
 app = Flask(__name__)
 
 
-openai.api_key = "sk-gBMYKDSpYDxVRswG7gPUlctm4huIskxFr_osHJuICUT3BlbkFJBXmqeg-d-Ktofi4TCrawVdiJzpazb1MUExcvzMkVYA"
+openai.api_key = "api-key"
 
 # Helper function to encode image as base64
 def encode_image(image_path):
@@ -17,46 +17,46 @@ def encode_image(image_path):
 # Define the route for the main page
 @app.route('/')
 def index():
-    return render_template('index.html')  
+    return render_template('index.html')
 
 # Define the route to handle the form submission
 @app.route('/analyze', methods=['POST'])
 def analyze():
     # Get allergens from the form input
     allergens = request.form.get('allergens')
-    
+
     # Get the uploaded image
     image = request.files['imageInput']
-    
+
     # Save the image to a temporary file
     image_path = os.path.join("uploads", image.filename)
     image.save(image_path)
-    
+
     # Encode the image as base64
     base64_image = encode_image(image_path)
 
     # Prepare the GPT system message
     system_message1 = """
-    The GPT will receive an image. It will first identify whether the image is a readable food label with ingredients, or if it is something else. 
-    If the image is blurry, it will inform the user that it is blurry. 
-    If the image is not a food label, it will say so. 
+    The GPT will receive an image. It will first identify whether the image is a readable food label with ingredients, or if it is something else.
+    If the image is blurry, it will inform the user that it is blurry.
+    If the image is not a food label, it will say so.
     If it is a readable ingredient list on a food label, the GPT will look at the provided allergens and check the ingredient list for both exact matches and related terms or misspellings to determine if the allergen is present in the food.
     It will then out put the text exactly like this:
     Allergens Present:
-    1. Alergen 1  - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredint)")
-    2. Alergen 2 - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredint)")
-    3. Alergen 3 - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredint)")
-    4. Alergen 4 - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredint)")
+    1. Allergen 1  - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredient)")
+    2. Alergen 2 - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredient)")
+    3. Allergen 3 - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredient)")
+    4. Allergen 4 - Present/ Not Present (and  gpt will say "listed in ingedients as (ingredient)")
     5... etc
 
     Harmul Ingredients (gpt will list the harmful ingredients/dyes/preservatives in red and a short phrase why they are harmful):
-    1. Harful Ingredient 1 - Reason
-    2. Harful Ingredient 2 - Reason
-    3. Harful Ingredient 3 - Reason
+    1. Harmful Ingredient 1 - Reason
+    2. Harmful Ingredient 2 - Reason
+    3. Harmful Ingredient 3 - Reason
     4... etc keep listing how every many harmful ingredients there are
 
-    That is all it is doing in that fortmat. Make sure to keep the line breaks and also bold the titles (Allergens Present and Hamful Ingredients). 
-    If the user says they dont have any allergens, just put no allergens given under the allergens present section and just list harful ingredients. 
+    That is all it is doing in that fortmat. Make sure to keep the line breaks and also bold the titles (Allergens Present and Hamful Ingredients). Do not bold anything except the titles.
+    If the user says they dont have any allergens, just put no allergens given under the allergens present section and just list harful ingredients.
     """
 
     system_message = """
@@ -99,10 +99,10 @@ Make sure to follow this structure exactly, preserving line breaks, and bolding 
     user_text = f"Please analyze the attached food label. The allergens are {allergens}"
 
     response = openai.chat.completions.create(
-        model="gpt-4o-mini",  
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": system_message},
-            {"role": "user", 
+            {"role": "user",
                 "content": [
                     {"type": "text", "text": user_text},
                     {
@@ -112,9 +112,9 @@ Make sure to follow this structure exactly, preserving line breaks, and bolding 
                         },
                     },
                 ],
-                    
+
                     }
-        ], 
+        ],
             max_tokens=1000
             )
 
