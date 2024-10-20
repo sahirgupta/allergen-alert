@@ -92,7 +92,7 @@ Harmful Ingredient 2 - Reason for being harmful
 Harmful Ingredient 3 - Reason for being harmful
 ... keep going for however many harmful ingredients there are
 
-Make sure to follow this structure exactly, preserving line breaks, and bolding the section titles ("Allergens Present" and "Harmful Ingredients"). Do not bold anything else. If no allergens are provided, skip the allergen checks and proceed directly to the harmful ingredients section.
+Make sure to follow this structure exactly, preserving line breaks, and bolding the section titles ("Allergens Present" and "Harmful Ingredients") as well as the ingredient names in the allergens and in the harmful ingredients section. Makre sure to bold all the allergens and all the harfmful ingredients. If no allergens are provided, skip the allergen checks and proceed directly to the harmful ingredients section.
 """
 
     # Prepare the user text
@@ -122,11 +122,8 @@ Make sure to follow this structure exactly, preserving line breaks, and bolding 
     result_text = response.choices[0].message.content
 
     # Replace the first `**` with `<b>` and the second with `</b>`, to make titles bold
-    result_text = result_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
-
-    # Repeat this for every title (Harmful Ingredients, etc.)
-    result_text = result_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
-
+    while "**" in result_text:
+        result_text = result_text.replace("**", "<b>", 1).replace("**", "</b>", 1)
     # Replace newlines with HTML line breaks
     result_text = result_text.replace("\n", "<br>")
 
